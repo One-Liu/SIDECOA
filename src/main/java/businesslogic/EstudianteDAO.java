@@ -20,8 +20,7 @@ public class EstudianteDAO implements IEstudianteDAO {
     public Estudiante obtenerEstudiante(Estudiante estudiante) throws SQLException {
         Estudiante estudianteObtenido = new Estudiante();
         String consulta =
-            "SELECT * FROM Estudiante\n" +
-            "WHERE matricula = ?";
+            "SELECT * FROM Estudiante WHERE matricula = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
