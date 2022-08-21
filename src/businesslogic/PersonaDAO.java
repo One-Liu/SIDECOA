@@ -18,8 +18,7 @@ public class PersonaDAO implements IPersonaDAO {
     public Persona obtenerPersona(Persona persona) throws SQLException {
         Persona personaObtenida = new Persona();
         String consulta =
-            "SELECT * FROM Persona\n" +
-            "WHERE id = ?";
+            "SELECT * FROM Persona WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

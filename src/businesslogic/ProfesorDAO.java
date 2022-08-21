@@ -18,8 +18,7 @@ public class ProfesorDAO implements IProfesorDAO {
     public Profesor obtenerProfesor(Profesor profesor) throws SQLException {
         Profesor profesorObtenido = new Profesor();
         String consulta =
-            "SELECT * FROM Profesor\n" +
-            "WHERE numPersonal = ?";
+            "SELECT * FROM Profesor WHERE numPersonal = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

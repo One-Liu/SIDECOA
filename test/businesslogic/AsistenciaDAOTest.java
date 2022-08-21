@@ -5,9 +5,10 @@ import domain.DiaDeLaSemana;
 import domain.Estudiante;
 import domain.ExperienciaEducativa;
 import domain.Horario;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import java.sql.Time;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -23,32 +24,36 @@ public class AsistenciaDAOTest {
     private DiaDeLaSemana diaDeLaSemana1;
     private AsistenciaDAO asistenciaDAO;
     
-    @BeforeAll
+    @Before
     public void inicializar() {
         asistenciaBusqueda = new Asistencia();
+        estudiante1 = new Estudiante(
+            "S20015692",
+            2,
+            "VALERIA",
+            "ABDALA",
+            "GARCÍA"
+        );
+        experienciaEducativa1 = new ExperienciaEducativa(
+            "80606",
+            "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
+        );
+        diaDeLaSemana1 = new DiaDeLaSemana(
+            2,
+            "MARTES"
+        );
+        horario1 = new Horario(
+            1,
+            Time.valueOf("09:00:00"),
+            Time.valueOf("11:00:00"),
+            "F103",
+            experienciaEducativa1,
+            diaDeLaSemana1
+        );
         asistencia1 = new Asistencia(
-            0,
-            estudiante1 = new Estudiante(
-                "",
-                0,
-                "",
-                "",
-                ""
-            ),
-            horario1 = new Horario(
-                0,
-                null,
-                null,
-                "",
-                experienciaEducativa1 = new ExperienciaEducativa(
-                    "",
-                    ""
-                ),
-                diaDeLaSemana1 = new DiaDeLaSemana(
-                    0,
-                    ""
-                )
-            )
+            1,
+            estudiante1,
+            horario1
         );
         
         asistenciaDAO = new AsistenciaDAO();
@@ -56,7 +61,7 @@ public class AsistenciaDAOTest {
 
     @Test
     public void testObtenerAsistencia() throws Exception {
-        asistenciaBusqueda.setId(0);
+        asistenciaBusqueda.setId(1);
         Asistencia asistenciObtenida = asistenciaDAO.obtenerAsistencia(asistenciaBusqueda);
         assertTrue(asistenciObtenida.equals(asistencia1));
     }

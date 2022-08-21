@@ -1,9 +1,9 @@
 package businesslogic;
 
 import domain.DiaDeLaSemana;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -15,12 +15,12 @@ public class DiaDeLaSemanaDAOTest {
     private DiaDeLaSemana diaDeLaSemana1;
     private DiaDeLaSemanaDAO diaDeLaSemanaDAO;
     
-    @BeforeAll
+    @Before
     public void inicializar() {
         diaBusqueda = new DiaDeLaSemana();
-        diaDeLaSemana1 = new DiaDeLaSemana();
-        diaDeLaSemana1.setId(1);
-        diaDeLaSemana1.setNombre("LUNES");
+        diaDeLaSemana1 = new DiaDeLaSemana(
+            1,
+            "LUNES");
         diaDeLaSemanaDAO = new DiaDeLaSemanaDAO();
     }
     

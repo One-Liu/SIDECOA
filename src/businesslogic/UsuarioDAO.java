@@ -18,8 +18,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     public Usuario obtenerUsuario(Usuario usuario) throws SQLException {
         Usuario usuarioObtenido = new Usuario();
         String consulta = 
-            "SELECT * FROM Usuario\n" +
-            "WHERE correoInstitucional = ? AND contrasenia = ?";
+            "SELECT * FROM Usuario WHERE correoInstitucional = ? AND contrasenia = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

@@ -19,8 +19,7 @@ public class EE_ProfesorDAO implements IEE_ProfesorDAO {
     public EE_Profesor obtenerEE_Profesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException {
         EE_Profesor experienciaEducativa_ProfesorObtenido = new EE_Profesor();
         String consulta =
-            "SELECT * FROM EE_Profesor\n" +
-            "WHERE id = ?";
+            "SELECT * FROM EE_Profesor WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
