@@ -1,5 +1,5 @@
 /lib/
 /build/
 /nbproject/
-/build.xml/
-/manifest.mf/
+build.xml
+manifest.mf
