@@ -17,8 +17,7 @@ public class DiaDeLaSemanaDAO implements IDiaDeLaSemanaDAO {
     public DiaDeLaSemana obtenerDiaDeLaSemana(DiaDeLaSemana diaDeLaSemana) throws SQLException {
         DiaDeLaSemana diaDeLaSemanaObtenido = new DiaDeLaSemana();
         String consulta =
-            "SELECT * FROM DiaDeLaSemana\n" +
-            "WHERE id = ?";
+            "SELECT * FROM DiaDeLaSemana WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

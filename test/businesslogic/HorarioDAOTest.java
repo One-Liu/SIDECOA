@@ -16,23 +16,23 @@ public class HorarioDAOTest {
     
     private Horario horarioBusqueda;
     private Horario horario1;
-    private ExperienciaEducativa experienciaEducativa1;
-    private DiaDeLaSemana diaDeLaSemana1;
-    private DiaDeLaSemana diaDeLaSemana2;
+    private ExperienciaEducativa experienciaEducativaTecnologias;
+    private DiaDeLaSemana diaLunes;
+    private DiaDeLaSemana diaMartes;
     private HorarioDAO horarioDAO;
     
     @Before
     public void inicializar() {
         horarioBusqueda = new Horario();
-        experienciaEducativa1 = new ExperienciaEducativa(
+        experienciaEducativaTecnologias = new ExperienciaEducativa(
             "80606",
             "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
         );
-        diaDeLaSemana1 = new DiaDeLaSemana(
+        diaLunes = new DiaDeLaSemana(
             1,
             "LUNES"
         );
-        diaDeLaSemana2 = new DiaDeLaSemana(
+        diaMartes = new DiaDeLaSemana(
             2,
             "MARTES"
         );
@@ -41,8 +41,8 @@ public class HorarioDAOTest {
             Time.valueOf("09:00:00"),
             Time.valueOf("11:00:00"),
             "F103",
-            experienciaEducativa1,
-            diaDeLaSemana2
+            experienciaEducativaTecnologias,
+            diaMartes
         );
         horarioDAO = new HorarioDAO();
     }

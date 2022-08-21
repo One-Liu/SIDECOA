@@ -10,20 +10,17 @@ public class Usuario {
     private int id;
     private String correoInstitucional;
     private String contrasenia;
-    private Profesor profesor;
 
     public Usuario() {
         this.id = 0;
         this.correoInstitucional = "";
         this.contrasenia = "";
-        this.profesor = new Profesor();
     }
 
-    public Usuario(int id, String correoInstitucional, String contrasenia, Profesor profesor) {
+    public Usuario(int id, String correoInstitucional, String contrasenia) {
         this.id = id;
         this.correoInstitucional = correoInstitucional;
         this.contrasenia = contrasenia;
-        this.profesor = profesor;
     }
     
     public int getId() {
@@ -50,21 +47,12 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 97 * hash + this.id;
         hash = 97 * hash + Objects.hashCode(this.correoInstitucional);
         hash = 97 * hash + Objects.hashCode(this.contrasenia);
-        hash = 97 * hash + Objects.hashCode(this.profesor);
         return hash;
     }
     
@@ -74,8 +62,7 @@ public class Usuario {
             Usuario tmpUsuario = (Usuario) obj;
             if(this.id == tmpUsuario.getId()
                 && this.correoInstitucional.equals(tmpUsuario.getCorreoInstitucional())
-                && this.contrasenia.equals(tmpUsuario.getContrasenia())
-                && this.profesor.equals(tmpUsuario.getProfesor())) {
+                && this.contrasenia.equals(tmpUsuario.getContrasenia())) {
                 return true;
             }
         } 
@@ -88,7 +75,6 @@ public class Usuario {
             "id=" + id + '\'' +
             ", correoInstitucional=" + correoInstitucional + '\'' +
             ", contrasenia=" + contrasenia + '\'' +
-            ", profesor=" + profesor + '\'' +
             '}';
     }
 }

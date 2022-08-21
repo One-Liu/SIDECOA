@@ -1,7 +1,6 @@
 package businesslogic;
 
 import dataaccess.ConexionBD;
-import domain.Profesor;
 import domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,13 +17,12 @@ public class UsuarioDAO implements IUsuarioDAO {
     public Usuario obtenerUsuario(Usuario usuario) throws SQLException {
         Usuario usuarioObtenido = new Usuario();
         String consulta = 
-            "SELECT * FROM Usuario WHERE correoInstitucional = ? AND contrasenia = ?";
+            "SELECT * FROM Usuario WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1, usuario.getCorreoInstitucional());
-            sentencia.setString(2, usuario.getContrasenia());
+            sentencia.setInt(1, usuario.getId());
             ResultSet resultado = sentencia.executeQuery();
             
             if(resultado.next()) {
@@ -40,22 +38,15 @@ public class UsuarioDAO implements IUsuarioDAO {
         int id;
         String correoInstitucional;
         String contrasenia;
-        String numPersonal;
-        Profesor profesorUsuario = new Profesor();
-        ProfesorDAO profesorDAO = new ProfesorDAO();
         
         id = resultado.getInt("id");
         correoInstitucional = resultado.getString("correoInstitucional");
         contrasenia = resultado.getString("contrasenia");
-        numPersonal = resultado.getString("numPersonal");
-        profesorUsuario.setNumPersonal(numPersonal);
-        profesorUsuario = profesorDAO.obtenerProfesor(profesorUsuario);
         
         Usuario usuario = new Usuario();
         usuario.setId(id);
         usuario.setCorreoInstitucional(correoInstitucional);
         usuario.setContrasenia(contrasenia);
-        usuario.setProfesor(profesorUsuario);
         
         return usuario;
     }

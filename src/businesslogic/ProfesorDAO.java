@@ -3,6 +3,7 @@ package businesslogic;
 import dataaccess.ConexionBD;
 import domain.Persona;
 import domain.Profesor;
+import domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,13 +67,19 @@ public class ProfesorDAO implements IProfesorDAO {
     private Profesor getProfesor(ResultSet resultado) throws SQLException {
         String numPersonal;
         int idPersona;
+        int idUsuario;
         Persona personaProfesor = new Persona();
         PersonaDAO personaDAO = new PersonaDAO();
+        Usuario usuarioProfesor = new Usuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         numPersonal = resultado.getString("numPersonal");
         idPersona = resultado.getInt("idPersona");
+        idUsuario = resultado.getInt("idUsuario");
         personaProfesor.setIdPersona(idPersona);
         personaProfesor = personaDAO.obtenerPersona(personaProfesor);
+        usuarioProfesor.setId(idUsuario);
+        usuarioProfesor = usuarioDAO.obtenerUsuario(usuarioProfesor);
         
         Profesor profesor = new Profesor();
         profesor.setNumPersonal(numPersonal);
@@ -80,6 +87,7 @@ public class ProfesorDAO implements IProfesorDAO {
         profesor.setNombre(personaProfesor.getNombre());
         profesor.setApellidoPaterno(personaProfesor.getApellidoPaterno());
         profesor.setApellidoMaterno(personaProfesor.getApellidoMaterno());
+        profesor.setUsuario(usuarioProfesor);
         
         return profesor;
     }

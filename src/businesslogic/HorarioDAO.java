@@ -20,8 +20,7 @@ public class HorarioDAO implements IHorarioDAO {
     public Horario obtenerHorario(Horario horario) throws SQLException {
         Horario horarioObtenido = new Horario();
         String consulta =
-            "SELECT * FROM Horario\n" +
-            "WHERE id = ?";
+            "SELECT * FROM Horario WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

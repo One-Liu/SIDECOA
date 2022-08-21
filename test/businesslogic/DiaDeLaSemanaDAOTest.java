@@ -12,13 +12,13 @@ import org.junit.Test;
 public class DiaDeLaSemanaDAOTest {
     
     private DiaDeLaSemana diaBusqueda;
-    private DiaDeLaSemana diaDeLaSemana1;
+    private DiaDeLaSemana diaLunes;
     private DiaDeLaSemanaDAO diaDeLaSemanaDAO;
     
     @Before
     public void inicializar() {
         diaBusqueda = new DiaDeLaSemana();
-        diaDeLaSemana1 = new DiaDeLaSemana(
+        diaLunes = new DiaDeLaSemana(
             1,
             "LUNES");
         diaDeLaSemanaDAO = new DiaDeLaSemanaDAO();
@@ -28,7 +28,7 @@ public class DiaDeLaSemanaDAOTest {
     public void testObtenerDiaDeLaSemana() throws Exception {
         diaBusqueda.setId(1);
         DiaDeLaSemana diaDeLaSemanaObtenido = diaDeLaSemanaDAO.obtenerDiaDeLaSemana(diaBusqueda);
-        assertTrue(diaDeLaSemanaObtenido.equals(diaDeLaSemana1));
+        assertTrue(diaDeLaSemanaObtenido.equals(diaLunes));
     }
     
 }

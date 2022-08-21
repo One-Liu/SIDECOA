@@ -3,6 +3,7 @@ package businesslogic;
 import dataaccess.ConexionBD;
 import domain.Estudiante;
 import domain.Persona;
+import domain.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,13 +89,19 @@ public class EstudianteDAO implements IEstudianteDAO {
     private Estudiante getEstudiante(ResultSet resultado) throws SQLException {
         String matricula;
         int idPersona;
+        int idUsuario;
         Persona personaEstudiante = new Persona();
         PersonaDAO personaDAO = new PersonaDAO();
+        Usuario usuarioEstudiante = new Usuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         matricula = resultado.getString("matricula");
         idPersona = resultado.getInt("idPersona");
+        idUsuario = resultado.getInt("idUsuario");
         personaEstudiante.setIdPersona(idPersona);
         personaEstudiante = personaDAO.obtenerPersona(personaEstudiante);
+        usuarioEstudiante.setId(idUsuario);
+        usuarioEstudiante = usuarioDAO.obtenerUsuario(usuarioEstudiante);
         
         Estudiante estudiante = new Estudiante();
         estudiante.setMatricula(matricula);
@@ -102,6 +109,7 @@ public class EstudianteDAO implements IEstudianteDAO {
         estudiante.setNombre(personaEstudiante.getNombre());
         estudiante.setApellidoPaterno(personaEstudiante.getApellidoPaterno());
         estudiante.setApellidoMaterno(personaEstudiante.getApellidoMaterno());
+        estudiante.setUsuario(usuarioEstudiante);
         
         return estudiante;
     }

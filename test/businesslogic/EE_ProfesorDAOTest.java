@@ -3,6 +3,7 @@ package businesslogic;
 import domain.EE_Profesor;
 import domain.ExperienciaEducativa;
 import domain.Profesor;
+import domain.Usuario;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,28 +16,35 @@ public class EE_ProfesorDAOTest {
     
     private EE_Profesor ee_ProfesorBusqueda;
     private EE_Profesor ee_Profesor1;
-    private ExperienciaEducativa ee1;
-    private Profesor profesor1;
+    private ExperienciaEducativa experienciaEducativaTecnologias;
+    private Usuario usuarioJuanCarlos;
+    private Profesor profesorJuanCarlos;
     private EE_ProfesorDAO ee_ProfesorDAO;
     
     @Before
     public void inicializar() {
         ee_ProfesorBusqueda = new EE_Profesor();
-        ee1 = new ExperienciaEducativa(
+        experienciaEducativaTecnologias = new ExperienciaEducativa(
             "80606",
             "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
         );
-        profesor1 = new Profesor(
+        usuarioJuanCarlos = new Usuario(
+            1, 
+            "juaperez@uv.mx", 
+            "3a909744a8a3da4b97497ca78bc730d4eabfc41857efaa345f043641ad1b6dd3"
+        );
+        profesorJuanCarlos = new Profesor(
             "1234",
             1,
             "JUAN CARLOS",
             "PÉREZ",
-            "ARRIAGA"
+            "ARRIAGA",
+            usuarioJuanCarlos
         );
         ee_Profesor1 = new EE_Profesor(
             1,
-            ee1,
-            profesor1
+            experienciaEducativaTecnologias,
+            profesorJuanCarlos
         );
         ee_ProfesorDAO = new EE_ProfesorDAO();
     }

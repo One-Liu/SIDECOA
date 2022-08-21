@@ -19,8 +19,7 @@ public class AsistenciaDAO implements IAsistenciaDAO {
     public Asistencia obtenerAsistencia(Asistencia asistencia) throws SQLException {
         Asistencia asistenciaObtenida = new Asistencia();
         String consulta =
-            "SELECT * FROM Asistencia\n" +
-            "WHERE id = ?";
+            "SELECT * FROM Asistencia WHERE id = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {

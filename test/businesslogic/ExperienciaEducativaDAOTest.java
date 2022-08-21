@@ -12,23 +12,23 @@ import org.junit.Test;
 public class ExperienciaEducativaDAOTest {
     
     private ExperienciaEducativa experienciaEducativaBusqueda;
-    private ExperienciaEducativa experienciaEducativa1;
-    private ExperienciaEducativa experienciaEducativa2;
-    private ExperienciaEducativa experienciaEducativa3;
+    private ExperienciaEducativa experienciaEducativaDiseno;
+    private ExperienciaEducativa experienciaEducativaPrueba;
+    private ExperienciaEducativa experienciaEducativaTecnologias;
     private ExperienciaEducativaDAO experienciaEducativaDAO;
     
     @Before
     public void inicializar() {
         experienciaEducativaBusqueda = new ExperienciaEducativa();
-        experienciaEducativa1 = new ExperienciaEducativa(
+        experienciaEducativaDiseno = new ExperienciaEducativa(
             "80602",
             "DISEÑO DE SOFTWARE"
         );
-        experienciaEducativa2 = new ExperienciaEducativa(
+        experienciaEducativaPrueba = new ExperienciaEducativa(
             "80604",
             "PRUEBA DE SOFTWARE"
         );
-        experienciaEducativa3 = new ExperienciaEducativa(
+        experienciaEducativaTecnologias = new ExperienciaEducativa(
             "80606",
             "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
         );
@@ -39,6 +39,6 @@ public class ExperienciaEducativaDAOTest {
     public void testObtenerExperienciaEducativa() throws Exception {
         experienciaEducativaBusqueda.setNrc("80606");
         ExperienciaEducativa experienciaEducativaObtenida = experienciaEducativaDAO.obtenerExperienciaEducativa(experienciaEducativaBusqueda);
-        assertTrue(experienciaEducativaObtenida.equals(experienciaEducativa3));
+        assertTrue(experienciaEducativaObtenida.equals(experienciaEducativaTecnologias));
     }
 }

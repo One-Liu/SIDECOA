@@ -17,8 +17,7 @@ public class ExperienciaEducativaDAO implements IExperienciaEducativaDAO {
     public ExperienciaEducativa obtenerExperienciaEducativa(ExperienciaEducativa experienciaEducativa) throws SQLException {
         ExperienciaEducativa experienciaEducativaObtenida = new ExperienciaEducativa();
         String consulta =
-            "SELECT * FROM ExperienciaEducativa\n" +
-            "WHERE nrc = ?";
+            "SELECT * FROM ExperienciaEducativa WHERE nrc = ?";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
