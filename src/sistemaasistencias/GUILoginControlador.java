@@ -29,14 +29,14 @@ public class GUILoginControlador {
     private TextField tfCorreoInstitucional;
     
     @FXML
-    private PasswordField pfContrasenia;
+    private PasswordField pfContrasena;
     
     private Usuario usuario = new Usuario();
 
     public boolean validarCamposLlenos() {
         boolean camposLlenos = true;
         if(tfCorreoInstitucional.getText().trim().isEmpty()
-            || pfContrasenia.getText().trim().isEmpty()) {
+            || pfContrasena.getText().trim().isEmpty()) {
             UtilidadVentana.mostrarAlerta(
                 "Campos vacíos",
                 "No puede haber campos vacíos",
@@ -53,7 +53,8 @@ public class GUILoginControlador {
             estudiante.setUsuario(usuario);
             estudiante = estudianteDAO.obtenerEstudianteQueIniciaSesion(estudiante);
             DatosGlobalesDeSesion.getDatosGlobalesDeSesion().setEstudiante(estudiante);
-
+            System.out.println("S");
+/*
             FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource(""));
             Parent raiz = cargadorFXML.load();
             Scene escena = new Scene(raiz);
@@ -64,6 +65,7 @@ public class GUILoginControlador {
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.show();
             UtilidadVentana.cerrarVentana(evento);
+            */
             
         } else if(tfCorreoInstitucional.getText().trim().contains("@uv.mx")) {
             ProfesorDAO profesorDAO = new ProfesorDAO();
@@ -71,9 +73,8 @@ public class GUILoginControlador {
             profesor.setUsuario(usuario);
             profesor = profesorDAO.obtenerProfesorQueIniciaSesion(profesor);
             DatosGlobalesDeSesion.getDatosGlobalesDeSesion().setProfesor(profesor);
-
-            System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAA");
-            
+            System.out.println("P");
+            /*
             FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource(""));
             Parent raiz = cargadorFXML.load();
             Scene escena = new Scene(raiz);
@@ -84,21 +85,16 @@ public class GUILoginControlador {
             escenario.initModality(Modality.APPLICATION_MODAL);
             escenario.show();
             UtilidadVentana.cerrarVentana(evento);
-        } else {
-            UtilidadVentana.mostrarAlerta(
-                "Usuario no válido", 
-                "Ingrese un usuario válido", 
-                Alert.AlertType.WARNING
-            );
+*/
         }
     }
 
     @FXML
     private void clicIniciarSesion(ActionEvent evento) {
         if(validarCamposLlenos()) {
-            this.usuario = new Usuario(
-                this.pfContrasenia.getText(), 
-                this.tfCorreoInstitucional.getText()
+            this.usuario = new Usuario( 
+                this.tfCorreoInstitucional.getText(),
+                this.pfContrasena.getText()
             );
             UsuarioDAO usuarioDAO = new UsuarioDAO();
 
@@ -106,8 +102,8 @@ public class GUILoginControlador {
                 this.usuario = usuarioDAO.obtenerUsuarioQueIniciaSesion(this.usuario);
                 if(this.usuario.getId() == 0) {
                     UtilidadVentana.mostrarAlerta(
-                        "Usuario inválido",
-                        "No se ha encontrado un usuario con los datos ingresados",
+                        "Error en el inicio de sesión",
+                        "Verifique que el correo y contraseña sean correctos",
                         Alert.AlertType.WARNING
                     );
                 } else {
