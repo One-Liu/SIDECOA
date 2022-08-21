@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
  */
 public interface IEstudianteDAO {
     public Estudiante obtenerEstudiante(Estudiante estudiante) throws SQLException;
+    public Estudiante obtenerEstudianteQueIniciaSesion(Estudiante estudiante) throws SQLException;
     public ObservableList<Estudiante> obtenerEstudiantes() throws SQLException;
     public boolean agregarEstudiante(Estudiante estudiante) throws SQLException;
 }

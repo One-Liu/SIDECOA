@@ -153,4 +153,12 @@ public class EstudianteDAOTest {
     public void testAgregarEstudiante() throws Exception {
         assertTrue(estudianteDAO.agregarEstudiante(estudianteNuevo));
     }
+    
+    @Test
+    public void testObtenerEstudianteQueIniciaSesion() throws Exception {
+        estudianteBusqueda.setUsuario(usuarioArmando);
+        Estudiante estudianteObtenido = estudianteDAO.obtenerEstudianteQueIniciaSesion(estudianteBusqueda);
+        assertTrue(estudianteObtenido.equals(estudianteArmando));
+    }
+    
 }

@@ -39,4 +39,12 @@ public class UsuarioDAOTest {
         Usuario usuarioObtenido = usuarioDAO.obtenerUsuario(usuarioBusqueda);
         assertTrue(usuarioObtenido.equals(usuarioJuanCarlos));
     }    
+    
+    @Test
+    public void testObtenerUsuarioQueIniciaSesion() throws Exception {
+        usuarioBusqueda.setCorreoInstitucional("zS20015692@estudiantes.uv.mx");
+        usuarioBusqueda.setContrasenia("v4l3r14");
+        Usuario usuarioObtenido = usuarioDAO.obtenerUsuarioQueIniciaSesion(usuarioBusqueda);
+        assertTrue(usuarioObtenido.equals(usuarioValeria));
+    }    
 }

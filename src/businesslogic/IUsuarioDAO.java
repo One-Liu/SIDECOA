@@ -1,7 +1,6 @@
 package businesslogic;
 
 import domain.Usuario;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -10,4 +9,5 @@ import java.sql.SQLException;
  */
 public interface IUsuarioDAO {
     public Usuario obtenerUsuario(Usuario usuario) throws SQLException;
+    public Usuario obtenerUsuarioQueIniciaSesion(Usuario usuario) throws SQLException;
 }

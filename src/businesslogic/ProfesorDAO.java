@@ -91,5 +91,26 @@ public class ProfesorDAO implements IProfesorDAO {
         
         return profesor;
     }
+
+    @Override
+    public Profesor obtenerProfesorQueIniciaSesion(Profesor profesor) throws SQLException {
+        Profesor profesorObtenido = new Profesor();
+        String consulta =
+            "SELECT * FROM Profesor WHERE idUsuario = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, profesor.getUsuario().getId());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            if(resultado.next()) {
+                profesorObtenido = getProfesor(resultado);
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return profesorObtenido;
+    }
     
 }

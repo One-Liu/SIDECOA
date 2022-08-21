@@ -81,4 +81,11 @@ public class ProfesorDAOTest {
         assertTrue(profesorDAO.agregarProfesor(profesorNuevo));
     }
     
+    @Test
+    public void testObtenerProfesorQueIniciaSesion() throws Exception {
+        profesorBusqueda.setUsuario(usuarioJuanCarlos);
+        Profesor profesorObtenido = profesorDAO.obtenerProfesorQueIniciaSesion(profesorBusqueda);
+        assertTrue(profesorObtenido.equals(profesorJuanCarlos));
+    }
+    
 }

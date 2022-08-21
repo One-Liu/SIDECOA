@@ -50,5 +50,27 @@ public class UsuarioDAO implements IUsuarioDAO {
         
         return usuario;
     }
+
+    @Override
+    public Usuario obtenerUsuarioQueIniciaSesion(Usuario usuario) throws SQLException {
+        Usuario usuarioObtenido = new Usuario();
+        String consulta = 
+            "SELECT * FROM Usuario WHERE correoInstitucional = ? AND contrasenia = sha2(?,256)";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, usuario.getCorreoInstitucional());
+            sentencia.setString(2, usuario.getContrasenia());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            if(resultado.next()) {
+                usuarioObtenido = getUsuario(resultado);
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return usuarioObtenido;
+    }
     
 }

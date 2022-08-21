@@ -17,6 +17,12 @@ public class Usuario {
         this.contrasenia = "";
     }
 
+    public Usuario(String correoInstitucional, String contrasenia) {
+        this.id = 0;
+        this.correoInstitucional = correoInstitucional;
+        this.contrasenia = contrasenia;
+    }
+    
     public Usuario(int id, String correoInstitucional, String contrasenia) {
         this.id = id;
         this.correoInstitucional = correoInstitucional;

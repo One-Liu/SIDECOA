@@ -113,5 +113,26 @@ public class EstudianteDAO implements IEstudianteDAO {
         
         return estudiante;
     }
+
+    @Override
+    public Estudiante obtenerEstudianteQueIniciaSesion(Estudiante estudiante) throws SQLException {
+        Estudiante estudianteObtenido = new Estudiante();
+        String consulta =
+            "SELECT * FROM Estudiante WHERE idUsuario = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, estudiante.getUsuario().getId());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            if(resultado.next()) {
+                estudianteObtenido = getEstudiante(resultado);
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return estudianteObtenido;
+    }
     
 }
