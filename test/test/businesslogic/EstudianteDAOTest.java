@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.EstudianteDAO;
 import domain.Estudiante;
 import domain.Usuario;
 import javafx.collections.FXCollections;

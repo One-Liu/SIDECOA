@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.EE_ProfesorDAO;
 import domain.EE_Profesor;
 import domain.ExperienciaEducativa;
 import domain.Profesor;

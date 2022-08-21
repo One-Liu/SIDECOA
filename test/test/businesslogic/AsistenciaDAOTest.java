@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.AsistenciaDAO;
 import domain.Asistencia;
 import domain.DiaDeLaSemana;
 import domain.Estudiante;

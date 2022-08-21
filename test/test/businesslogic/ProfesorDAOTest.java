@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.ProfesorDAO;
 import domain.Profesor;
 import domain.Usuario;
 import org.junit.Before;

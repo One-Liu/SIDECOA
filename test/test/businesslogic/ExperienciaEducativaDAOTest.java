@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.ExperienciaEducativaDAO;
 import domain.ExperienciaEducativa;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;

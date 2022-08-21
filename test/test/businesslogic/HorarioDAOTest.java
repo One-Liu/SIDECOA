@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.HorarioDAO;
 import domain.DiaDeLaSemana;
 import domain.ExperienciaEducativa;
 import domain.Horario;

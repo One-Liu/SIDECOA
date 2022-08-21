@@ -1,5 +1,6 @@
-package businesslogic;
+package test.businesslogic;
 
+import businesslogic.DiaDeLaSemanaDAO;
 import domain.DiaDeLaSemana;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
