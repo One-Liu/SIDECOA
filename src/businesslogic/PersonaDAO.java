@@ -57,10 +57,11 @@ public class PersonaDAO implements IPersonaDAO {
 
     @Override
     public int agregarPersona(Persona persona) throws SQLException {
-        ConexionBD baseDeDatos = new ConexionBD();
         int idPersona = 0;
+        String consulta = "INSERT INTO Persona VALUES(NULL,?,?,?)";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
         try (Connection conexion = baseDeDatos.abrirConexion()) {
-            String consulta = "INSERT INTO Persona VALUES(NULL,?,?,?)";
             PreparedStatement sentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
             sentencia.setString(1, persona.getNombre());
             sentencia.setString(2, persona.getApellidoPaterno());

@@ -18,6 +18,13 @@ public class Persona {
         this.apellidoPaterno = "";
         this.apellidoMaterno = "";
     }
+    
+    public Persona(String nombre, String apellidoPaterno, String apellidoMaterno) {
+        this.idPersona = 0;
+        this.nombre = nombre;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+    }
 
     public Persona(int idPersona, String nombre, String apellidoPaterno, String apellidoMaterno) {
         this.idPersona = idPersona;

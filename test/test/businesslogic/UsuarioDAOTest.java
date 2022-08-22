@@ -46,5 +46,11 @@ public class UsuarioDAOTest {
         usuarioBusqueda.setContrasenia("v4l3r14");
         Usuario usuarioObtenido = usuarioDAO.obtenerUsuarioQueIniciaSesion(usuarioBusqueda);
         assertTrue(usuarioObtenido.equals(usuarioValeria));
-    }    
+    }
+    
+    @Test
+    public void testValidarUsuarioRegistrado() throws Exception {
+        assertTrue(usuarioDAO.validarUsuarioRegistrado(usuarioValeria));
+    }        
+    
 }

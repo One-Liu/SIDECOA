@@ -9,6 +9,8 @@ import domain.Profesor;
 import domain.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,8 +34,39 @@ public class GUILoginControlador {
     private PasswordField pfContrasena;
     
     private Usuario usuario = new Usuario();
-
-    public boolean validarCamposLlenos() {
+    
+    public void cargarCamposGUI() {
+        tfCorreoInstitucional.lengthProperty().addListener(new ChangeListener<Number>() {
+            int tamanoMaximo = 25;
+            
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number valorAnterior, Number valorActual) {
+                if (valorActual.intValue() > valorAnterior.intValue()) {
+                    if (tfCorreoInstitucional.getText().length() >= tamanoMaximo) {
+                        tfCorreoInstitucional.setText(tfCorreoInstitucional.getText().substring(0, tamanoMaximo));
+                    }
+                }
+            }
+        });
+        pfContrasena.lengthProperty().addListener(new ChangeListener<Number>() {
+            int tamanoMaximo = 30;
+            
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number valorAnterior, Number valorActual) {
+                if (valorActual.intValue() > valorAnterior.intValue()) {
+                    if (pfContrasena.getText().length() >= tamanoMaximo) {
+                        pfContrasena.setText(pfContrasena.getText().substring(0, tamanoMaximo));
+                    }
+                }
+            }
+        });
+    }
+    
+    private boolean validarCamposLlenos() {
+        System.out.println(tfCorreoInstitucional.getText());
+        System.out.println(pfContrasena.getText());
         boolean camposLlenos = true;
         if(tfCorreoInstitucional.getText().trim().isEmpty()
             || pfContrasena.getText().trim().isEmpty()) {
@@ -47,7 +80,7 @@ public class GUILoginControlador {
     }
 
     private void validarTipoDeUsuario(ActionEvent evento) throws SQLException, IOException {
-        if(tfCorreoInstitucional.getText().trim().contains("@estudiantes.uv.mx")) {
+        if(tfCorreoInstitucional.getText().endsWith("@estudiantes.uv.mx")) {
             EstudianteDAO estudianteDAO = new EstudianteDAO();
             Estudiante estudiante = new Estudiante();
             estudiante.setUsuario(usuario);
@@ -67,7 +100,7 @@ public class GUILoginControlador {
             UtilidadVentana.cerrarVentana(evento);
             */
             
-        } else if(tfCorreoInstitucional.getText().trim().contains("@uv.mx")) {
+        } else if(tfCorreoInstitucional.getText().endsWith("@uv.mx")) {
             ProfesorDAO profesorDAO = new ProfesorDAO();
             Profesor profesor = new Profesor();
             profesor.setUsuario(usuario);

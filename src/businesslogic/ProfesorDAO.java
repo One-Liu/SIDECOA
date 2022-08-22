@@ -40,19 +40,21 @@ public class ProfesorDAO implements IProfesorDAO {
     public boolean agregarProfesor(Profesor profesor) throws SQLException {
         boolean profesorAgregado = false;
         PersonaDAO personaDAO = new PersonaDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         Persona personaProfesor = new Persona();
         personaProfesor.setNombre(personaProfesor.getNombre());
         personaProfesor.setApellidoPaterno(personaProfesor.getApellidoPaterno());
         personaProfesor.setApellidoMaterno(personaProfesor.getApellidoMaterno());
         
-        String consulta = "INSERT INTO Profesor VALUES (?,?)";
+        String consulta = "INSERT INTO Profesor VALUES (?,?,?)";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, profesor.getNumPersonal());
             sentencia.setInt(2, personaDAO.agregarPersona(personaProfesor));
+            sentencia.setInt(3, usuarioDAO.agregarUsuario(profesor.getUsuario()));
             int columnasAfectadas = sentencia.executeUpdate();
             
             if(columnasAfectadas != 0) {

@@ -62,19 +62,21 @@ public class EstudianteDAO implements IEstudianteDAO {
     public boolean agregarEstudiante(Estudiante estudiante) throws SQLException {
         boolean estudianteAgregado = false;
         PersonaDAO personaDAO = new PersonaDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         Persona personaEstudiante = new Persona();
         personaEstudiante.setNombre(personaEstudiante.getNombre());
         personaEstudiante.setApellidoPaterno(personaEstudiante.getApellidoPaterno());
         personaEstudiante.setApellidoMaterno(personaEstudiante.getApellidoMaterno());
         
-        String consulta = "INSERT INTO Estudiante VALUES (?,?)";
+        String consulta = "INSERT INTO Estudiante VALUES (?,?,?)";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try(Connection conexion = baseDeDatos.abrirConexion()) {
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, estudiante.getMatricula());
             sentencia.setInt(2, personaDAO.agregarPersona(personaEstudiante));
+            sentencia.setInt(3, usuarioDAO.agregarUsuario(estudiante.getUsuario()));
             int columnasAfectadas = sentencia.executeUpdate();
             
             if(columnasAfectadas != 0) {

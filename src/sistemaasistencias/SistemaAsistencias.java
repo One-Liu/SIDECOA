@@ -14,12 +14,23 @@ import javafx.stage.Stage;
 public class SistemaAsistencias extends Application {
     
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("GUILogin.fxml"));
-        Scene scene = new Scene((Parent) fxmlLoader.load());
-        primaryStage.setTitle("Inicio de sesión");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage escenario) throws IOException {
+        /*
+        FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUILogin.fxml"));
+        Scene escena = new Scene((Parent) cargadorFXML.load());
+        GUILoginControlador controladorGUI = cargadorFXML.getController();
+        controladorGUI.cargarCamposGUI();
+        escenario.setTitle("Inicio de sesión");
+        escenario.setScene(escena);
+        escenario.show();
+        */
+        FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUIRegistroDeUsuario.fxml"));
+        Scene escena = new Scene((Parent) cargadorFXML.load());
+        GUIRegistroDeUsuarioControlador controladorGUI = cargadorFXML.getController();
+        controladorGUI.cargarCamposGUI();
+        escenario.setTitle("Registro de usuario");
+        escenario.setScene(escena);
+        escenario.show();
     }
     
     public static void main(String[] args) {

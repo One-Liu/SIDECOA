@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -71,6 +72,46 @@ public class UsuarioDAO implements IUsuarioDAO {
             baseDeDatos.cerrarConexion();
         }
         return usuarioObtenido;
+    }
+
+    @Override
+    public int agregarUsuario(Usuario usuario) throws SQLException {
+        int idUsuario = 0;
+        String consulta = "INSERT INTO Usuario VALUES(NULL,?,?)";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try (Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            sentencia.setString(1, usuario.getCorreoInstitucional());
+            sentencia.setString(2, usuario.getContrasenia());
+            sentencia.executeUpdate();
+            ResultSet resultado = sentencia.getGeneratedKeys();
+            
+            if (resultado.next()) {
+                idUsuario = resultado.getInt(1);
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return idUsuario;
+    }
+
+    @Override
+    public boolean validarUsuarioRegistrado(Usuario usuario) throws SQLException {
+        boolean usuarioRegistrado = false;
+        String consulta = "SELECT * FROM Usuario WHERE correoInstitucional = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, usuario.getCorreoInstitucional());
+            ResultSet resultado = sentencia.executeQuery();
+            if(resultado.next()) {
+                usuarioRegistrado = true;
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return usuarioRegistrado;
     }
     
 }
