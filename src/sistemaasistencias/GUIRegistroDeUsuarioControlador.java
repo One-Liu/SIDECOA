@@ -240,7 +240,7 @@ public class GUIRegistroDeUsuarioControlador {
             String nombre = this.tfNombre.getText().toUpperCase().replaceAll("\\s+", " ").trim();
             String apellidoPaterno = this.tfApellidoPaterno.getText().toUpperCase().replaceAll("\\s+", " ").trim();
             String apellidoMaterno = this.tfApellidoMaterno.getText().toUpperCase().replaceAll("\\s+", " ").trim();
-            String correoInstitucional = this.tfCorreoInstitucional.getText().toUpperCase().replaceAll("\\s+", " ").trim();
+            String correoInstitucional = this.tfCorreoInstitucional.getText().replaceAll("\\s+", " ").trim();
             String matriculaNumPersonal = this.tfMatriculaNumPersonal.getText().toUpperCase().replaceAll("\\s+", " ").trim();
             String tipoUsuario = this.cbTipoUsuario.getSelectionModel().getSelectedItem();
             

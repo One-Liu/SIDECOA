@@ -77,7 +77,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public int agregarUsuario(Usuario usuario) throws SQLException {
         int idUsuario = 0;
-        String consulta = "INSERT INTO Usuario VALUES(NULL,?,?)";
+        String consulta = "INSERT INTO Usuario VALUES(NULL,?,sha2(?,256))";
         ConexionBD baseDeDatos = new ConexionBD();
         
         try (Connection conexion = baseDeDatos.abrirConexion()) {

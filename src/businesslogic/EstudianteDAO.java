@@ -65,9 +65,9 @@ public class EstudianteDAO implements IEstudianteDAO {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         Persona personaEstudiante = new Persona();
-        personaEstudiante.setNombre(personaEstudiante.getNombre());
-        personaEstudiante.setApellidoPaterno(personaEstudiante.getApellidoPaterno());
-        personaEstudiante.setApellidoMaterno(personaEstudiante.getApellidoMaterno());
+        personaEstudiante.setNombre(estudiante.getNombre());
+        personaEstudiante.setApellidoPaterno(estudiante.getApellidoPaterno());
+        personaEstudiante.setApellidoMaterno(estudiante.getApellidoMaterno());
         
         String consulta = "INSERT INTO Estudiante VALUES (?,?,?)";
         ConexionBD baseDeDatos = new ConexionBD();
