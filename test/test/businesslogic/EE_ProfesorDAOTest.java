@@ -16,6 +16,7 @@ import org.junit.Test;
 public class EE_ProfesorDAOTest {
     
     private EE_Profesor ee_ProfesorBusqueda;
+    private EE_Profesor ee_ProfesorNuevo;
     private EE_Profesor ee_Profesor1;
     private ExperienciaEducativa experienciaEducativaTecnologias;
     private Usuario usuarioJuanCarlos;
@@ -25,6 +26,24 @@ public class EE_ProfesorDAOTest {
     @Before
     public void inicializar() {
         ee_ProfesorBusqueda = new EE_Profesor();
+        ee_ProfesorNuevo = new EE_Profesor(
+            0, 
+            new ExperienciaEducativa(
+                "", 
+                ""
+            ), 
+            new Profesor(
+                "", 
+                0, 
+                "", 
+                "", 
+                "", 
+                new Usuario(
+                    "", 
+                    ""
+                )
+            )
+        );
         experienciaEducativaTecnologias = new ExperienciaEducativa(
             "80606",
             "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
@@ -55,6 +74,17 @@ public class EE_ProfesorDAOTest {
         ee_ProfesorBusqueda.setId(1);
         EE_Profesor experienciaEducativa_ProfesorObtenido = ee_ProfesorDAO.obtenerEE_Profesor(ee_ProfesorBusqueda);
         assertTrue(experienciaEducativa_ProfesorObtenido.equals(ee_Profesor1));
+    }
+    
+    @Test
+    public void testAsignarEE_Profesor() throws Exception {
+        assertTrue(ee_ProfesorDAO.asignarEE_Profesor(ee_ProfesorNuevo));
+    }
+    
+    @Test
+    public void testEEAsignadaAProfesor() throws Exception {
+        ee_ProfesorBusqueda.getExperienciaEducativa().setNrc("80606");
+        assertTrue(ee_ProfesorDAO.eeAsignadaAProfesor(ee_ProfesorBusqueda));
     }
     
 }

@@ -2,6 +2,7 @@ package businesslogic;
 
 import domain.Profesor;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -10,5 +11,6 @@ import java.sql.SQLException;
 public interface IProfesorDAO {
     public Profesor obtenerProfesor(Profesor profesor) throws SQLException;
     public Profesor obtenerProfesorQueIniciaSesion(Profesor profesor) throws SQLException;
+    public List<Profesor> obtenerProfesores() throws SQLException;
     public boolean agregarProfesor(Profesor profesor) throws SQLException;
 }

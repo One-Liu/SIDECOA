@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -113,6 +115,23 @@ public class ProfesorDAO implements IProfesorDAO {
             baseDeDatos.cerrarConexion();
         }
         return profesorObtenido;
+    }
+
+    @Override
+    public List<Profesor> obtenerProfesores() throws SQLException {
+        List<Profesor> profesores = new ArrayList<>();
+        String consulta = "SELECT * FROM Profesor";
+        ConexionBD baseDeDatos = new ConexionBD();
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while(resultado.next()) {
+                profesores.add(getProfesor(resultado));
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return profesores;
     }
     
 }

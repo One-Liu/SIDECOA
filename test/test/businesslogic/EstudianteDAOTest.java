@@ -24,6 +24,7 @@ public class EstudianteDAOTest {
     private Usuario usuarioLeonardo;
     private Usuario usuarioDaniela;
     private Usuario usuarioArmando;
+    private Usuario usuarioJoshua;
     private Estudiante estudianteValeria;
     private Estudiante estudianteJoseph;
     private Estudiante estudianteSebastian;
@@ -77,6 +78,12 @@ public class EstudianteDAOTest {
             9, 
             "zS20015699@estudiantes.uv.mx", 
             "615d3cc23efc235f844f8497cb1e555cd9587d0206407a3fbb42074719bde201"
+        );
+        usuarioJoshua = new Usuario(
+            10, 
+            "zS20015728@estudiantes.uv.mx", 
+            //m_foY2eh
+            ""
         );
         estudianteValeria = new Estudiante(
             "S20015692",

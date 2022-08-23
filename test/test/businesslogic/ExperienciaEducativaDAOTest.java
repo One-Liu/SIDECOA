@@ -2,6 +2,8 @@ package test.businesslogic;
 
 import businesslogic.ExperienciaEducativaDAO;
 import domain.ExperienciaEducativa;
+import java.util.ArrayList;
+import java.util.List;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.junit.Test;
 public class ExperienciaEducativaDAOTest {
     
     private ExperienciaEducativa experienciaEducativaBusqueda;
+    private List<ExperienciaEducativa> experienciasEducativas;
     private ExperienciaEducativa experienciaEducativaDiseno;
     private ExperienciaEducativa experienciaEducativaPrueba;
     private ExperienciaEducativa experienciaEducativaTecnologias;
@@ -33,6 +36,10 @@ public class ExperienciaEducativaDAOTest {
             "80606",
             "TECNOLOGÍAS PARA LA CONSTRUCCIÓN DE SOFTWARE"
         );
+        experienciasEducativas = new ArrayList<>();
+        experienciasEducativas.add(experienciaEducativaDiseno);
+        experienciasEducativas.add(experienciaEducativaPrueba);
+        experienciasEducativas.add(experienciaEducativaTecnologias);
         experienciaEducativaDAO = new ExperienciaEducativaDAO();
     }
     
@@ -41,5 +48,11 @@ public class ExperienciaEducativaDAOTest {
         experienciaEducativaBusqueda.setNrc("80606");
         ExperienciaEducativa experienciaEducativaObtenida = experienciaEducativaDAO.obtenerExperienciaEducativa(experienciaEducativaBusqueda);
         assertTrue(experienciaEducativaObtenida.equals(experienciaEducativaTecnologias));
+    }
+    
+    @Test
+    public void testObtenerExperienciasEducativas() throws Exception {
+        List<ExperienciaEducativa> experienciasEducativasObtenidas = experienciaEducativaDAO.obtenerExperienciasEducativas();
+        assertTrue(experienciasEducativasObtenidas.equals(experienciasEducativas));
     }
 }

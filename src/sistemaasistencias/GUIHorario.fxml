@@ -5,19 +5,18 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="679.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaasistencias.GUIHorarioControlador">
    <children>
-      <TableView layoutX="24.0" layoutY="14.0" prefHeight="239.0" prefWidth="632.0">
+      <TableView fx:id="tblHorario" layoutX="24.0" layoutY="14.0" prefHeight="239.0" prefWidth="632.0">
         <columns>
-            <TableColumn prefWidth="75.0" text="NRC" />
-            <TableColumn prefWidth="200.0" text="EE" />
-            <TableColumn editable="false" prefWidth="75.0" text="Salón" />
-          <TableColumn editable="false" prefWidth="100.0" text="Día" />
-          <TableColumn editable="false" prefWidth="90.0" text="Inicia" />
-            <TableColumn editable="false" prefWidth="90.0" text="Termina" />
+            <TableColumn fx:id="clmNRC" prefWidth="75.0" text="NRC" />
+            <TableColumn fx:id="clmEE" prefWidth="200.0" text="EE" />
+            <TableColumn fx:id="clmSalon" editable="false" prefWidth="75.0" text="Salón" />
+          <TableColumn fx:id="clmDia" editable="false" prefWidth="100.0" text="Día" />
+          <TableColumn fx:id="clmInicia" editable="false" prefWidth="90.0" text="Inicia" />
+            <TableColumn fx:id="clmTermina" editable="false" prefWidth="90.0" text="Termina" />
         </columns>
       </TableView>
-      <Button layoutX="599.0" layoutY="262.0" mnemonicParsing="false" text="Aceptar" />
+      <Button layoutX="599.0" layoutY="262.0" mnemonicParsing="false" onAction="#clicAceptar" text="Aceptar" />
    </children>
 </AnchorPane>

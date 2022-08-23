@@ -9,4 +9,6 @@ import java.sql.SQLException;
  */
 public interface IEE_ProfesorDAO {
     public EE_Profesor obtenerEE_Profesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException;
+    public boolean asignarEE_Profesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException;
+    public boolean eeAsignadaAProfesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException;
 }

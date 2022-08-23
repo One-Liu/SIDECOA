@@ -82,6 +82,18 @@ public class Horario {
     public void setDia(DiaDeLaSemana dia) {
         this.dia = dia;
     }
+    
+    public String getStringDia() {
+        return this.dia.getNombre();
+    }
+    
+    public String getNrc() {
+        return this.experienciaEducativa.getNrc();
+    }
+    
+    public String getNombreEE() {
+        return this.experienciaEducativa.getNombre();
+    }
 
     @Override
     public int hashCode() {

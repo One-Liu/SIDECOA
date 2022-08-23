@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -60,5 +62,49 @@ public class AsistenciaDAO implements IAsistenciaDAO {
         
         return asistencia;
     }
-    
+
+    @Override
+    public List<Asistencia> obtenerAsistenciasPorEE(Asistencia asistencia) throws SQLException {
+        List<Asistencia> asistenciasObtenida = new ArrayList<>();
+        String consulta = 
+            "SELECT * FROM Asistencia A \n" +
+            "LEFT JOIN Horario H ON H.id = A.idHorario \n" +
+            "LEFT JOIN ExperienciaEducativa EE ON EE.nrc = H.nrc \n" +
+            "WHERE EE.nrc = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, asistencia.getHorario().getExperienciaEducativa().getNrc());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            while(resultado.next()) {
+                asistenciasObtenida.add(getAsistencia(resultado));
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return asistenciasObtenida;
+    }
+
+    @Override
+    public List<Asistencia> obtenerHorarioEstudiante(Asistencia asistencia) throws SQLException {
+        List<Asistencia> asistenciasObtenida = new ArrayList<>();
+        String consulta = 
+            "SELECT * FROM Asistencia \n" +
+            "WHERE matricula = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, asistencia.getEstudiante().getMatricula());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            while(resultado.next()) {
+                asistenciasObtenida.add(getAsistencia(resultado));
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return asistenciasObtenida;    }
 }

@@ -60,5 +60,46 @@ public class EE_ProfesorDAO implements IEE_ProfesorDAO {
         
         return experienciaEducativa_Profesor;
     }
+
+    @Override
+    public boolean asignarEE_Profesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException {
+        boolean ee_ProfesorAsignados = false;
+        String consulta = "INSERT INTO EE_Profesor VALUES (NULL,?,?)";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, experienciaEducativa_Profesor.getExperienciaEducativa().getNrc());
+            sentencia.setString(2, experienciaEducativa_Profesor.getProfesor().getNumPersonal());
+            int columnasAfectadas = sentencia.executeUpdate();
+            
+            if(columnasAfectadas != 0) {
+                ee_ProfesorAsignados = true;
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return ee_ProfesorAsignados;
+    }
+
+    @Override
+    public boolean eeAsignadaAProfesor(EE_Profesor experienciaEducativa_Profesor) throws SQLException {
+        boolean eeConProfesorAsignado = false;
+        String consulta = "SELECT * FROM EE_Profesor WHERE nrc = ?";
+        ConexionBD baseDeDatos = new ConexionBD();
+        
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, experienciaEducativa_Profesor.getExperienciaEducativa().getNrc());
+            ResultSet resultado = sentencia.executeQuery();
+            
+            if(resultado.next()) {
+                eeConProfesorAsignado = true;
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return eeConProfesorAsignado;
+    }
     
 }

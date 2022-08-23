@@ -19,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -37,7 +36,7 @@ public class GUILoginControlador {
     
     public void cargarCamposGUI() {
         tfCorreoInstitucional.lengthProperty().addListener(new ChangeListener<Number>() {
-            int tamanoMaximo = 25;
+            int tamanoMaximo = 30;
             
             @Override
             public void changed(ObservableValue<? extends Number> observable,
@@ -65,8 +64,6 @@ public class GUILoginControlador {
     }
     
     private boolean validarCamposLlenos() {
-        System.out.println(tfCorreoInstitucional.getText());
-        System.out.println(pfContrasena.getText());
         boolean camposLlenos = true;
         if(tfCorreoInstitucional.getText().trim().isEmpty()
             || pfContrasena.getText().trim().isEmpty()) {
@@ -86,19 +83,22 @@ public class GUILoginControlador {
             estudiante.setUsuario(usuario);
             estudiante = estudianteDAO.obtenerEstudianteQueIniciaSesion(estudiante);
             DatosGlobalesDeSesion.getDatosGlobalesDeSesion().setEstudiante(estudiante);
-            System.out.println("S");
-/*
-            FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource(""));
-            Parent raiz = cargadorFXML.load();
-            Scene escena = new Scene(raiz);
-            Stage escenario = new Stage();
-            escenario.setResizable(false);
-            escenario.setScene(escena);
-            escenario.setTitle("Menú principal");
-            escenario.initModality(Modality.APPLICATION_MODAL);
-            escenario.show();
-            UtilidadVentana.cerrarVentana(evento);
-            */
+            
+            FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUIHorario.fxml"));
+            try {
+                Scene escena = new Scene((Parent) cargadorFXML.load());
+                GUIHorarioControlador controladorGUI = cargadorFXML.getController();
+                controladorGUI.setEstudiante(DatosGlobalesDeSesion.getDatosGlobalesDeSesion().getEstudiante());
+                controladorGUI.cargarCamposGUI();
+                Stage escenario = new Stage();
+                escenario.setTitle("Horario");
+                escenario.setScene(escena);
+                escenario.showAndWait();
+            } catch(IOException excepcionIO) {
+                UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
+            } catch(SQLException excepcionSQL) {
+                UtilidadVentana.mensajePerdidaDeConexion();
+            }
             
         } else if(tfCorreoInstitucional.getText().endsWith("@uv.mx")) {
             ProfesorDAO profesorDAO = new ProfesorDAO();
@@ -106,19 +106,20 @@ public class GUILoginControlador {
             profesor.setUsuario(usuario);
             profesor = profesorDAO.obtenerProfesorQueIniciaSesion(profesor);
             DatosGlobalesDeSesion.getDatosGlobalesDeSesion().setProfesor(profesor);
-            System.out.println("P");
-            /*
-            FXMLLoader cargadorFXML = new FXMLLoader(getClass().getResource(""));
-            Parent raiz = cargadorFXML.load();
-            Scene escena = new Scene(raiz);
+            
+            FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUIAsistencias.fxml"));
+            Scene escena = new Scene((Parent) cargadorFXML.load());
+            GUIAsistenciasControlador controladorGUI = cargadorFXML.getController();
             Stage escenario = new Stage();
-            escenario.setResizable(false);
-            escenario.setScene(escena);
-            escenario.setTitle("Menú principal");
-            escenario.initModality(Modality.APPLICATION_MODAL);
-            escenario.show();
-            UtilidadVentana.cerrarVentana(evento);
-*/
+            try {
+                controladorGUI.cargarCamposGUI();
+                escenario.setTitle("Asistencias");
+                escenario.setScene(escena);
+                escenario.show();
+                UtilidadVentana.cerrarVentana(evento);
+            } catch(SQLException excepcionSQL) {
+                UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
+            }
         }
     }
 
@@ -147,6 +148,22 @@ public class GUILoginControlador {
             } catch(IOException excepcionIO) {
                 UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
             }
+        }
+    }
+    
+    @FXML
+    private void clicRegistrarse(ActionEvent evento) {
+        FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUIRegistroDeUsuario.fxml"));
+        try {
+            Scene escena = new Scene((Parent) cargadorFXML.load());
+            GUIRegistroDeUsuarioControlador controladorGUI = cargadorFXML.getController();
+            controladorGUI.cargarCamposGUI();
+            Stage escenario = new Stage();
+            escenario.setTitle("Registro de usuario");
+            escenario.setScene(escena);
+            escenario.showAndWait();
+        } catch(IOException excepcionIO) {
+            UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
         }
     }
 }

@@ -21,7 +21,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="41.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="243.0" style="-fx-background-color: #FFFFFF;" text="REGISTRARSE">
+      <Button layoutX="41.0" layoutY="238.0" mnemonicParsing="false" onAction="#clicRegistrarse" prefHeight="25.0" prefWidth="243.0" style="-fx-background-color: #FFFFFF;" text="REGISTRARSE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

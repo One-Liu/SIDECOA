@@ -3,6 +3,8 @@ package test.businesslogic;
 import businesslogic.ProfesorDAO;
 import domain.Profesor;
 import domain.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -15,6 +17,7 @@ public class ProfesorDAOTest {
     
     private Profesor profesorBusqueda;
     private Profesor profesorNuevo;
+    private List<Profesor> profesores;
     private Usuario usuarioJuanCarlos;
     private Usuario usuarioAnaLuz;
     private Usuario usuarioLourdes;
@@ -66,6 +69,10 @@ public class ProfesorDAOTest {
             "RODRÍGUEZ",
             usuarioLourdes
         );
+        profesores = new ArrayList<>();
+        profesores.add(profesorJuanCarlos);
+        profesores.add(profesorAnaLuz);
+        profesores.add(profesorLourdes);
         profesorDAO = new ProfesorDAO();
     }
 
@@ -86,6 +93,12 @@ public class ProfesorDAOTest {
         profesorBusqueda.setUsuario(usuarioJuanCarlos);
         Profesor profesorObtenido = profesorDAO.obtenerProfesorQueIniciaSesion(profesorBusqueda);
         assertTrue(profesorObtenido.equals(profesorJuanCarlos));
+    }
+    
+    @Test
+    public void testObtenerProfesores() throws Exception {
+        List<Profesor> profesoresObtenidos = profesorDAO.obtenerProfesores();
+        assertTrue(profesoresObtenidos.equals(profesores));
     }
     
 }

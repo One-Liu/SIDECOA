@@ -38,6 +38,10 @@ public class Estudiante extends Persona {
         this.usuario = usuario;
     }
 
+    public String getCorreoInstitucional() {
+        return this.usuario.getCorreoInstitucional();
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;

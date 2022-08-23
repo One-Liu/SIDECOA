@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -46,6 +48,23 @@ public class ExperienciaEducativaDAO implements IExperienciaEducativaDAO {
         experienciaEducativa.setNombre(nombre);
         
         return experienciaEducativa;
+    }
+
+    @Override
+    public List<ExperienciaEducativa> obtenerExperienciasEducativas() throws SQLException {
+        List<ExperienciaEducativa> experienciasEducativas = new ArrayList<>();
+        String consulta = "SELECT * FROM ExperienciaEducativa";
+        ConexionBD baseDeDatos = new ConexionBD();
+        try(Connection conexion = baseDeDatos.abrirConexion()) {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while(resultado.next()) {
+                experienciasEducativas.add(getExperienciaEducativa(resultado));
+            }
+        } finally {
+            baseDeDatos.cerrarConexion();
+        }
+        return experienciasEducativas;
     }
     
 }
