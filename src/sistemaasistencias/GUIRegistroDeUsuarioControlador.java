@@ -6,14 +6,19 @@ import businesslogic.UsuarioDAO;
 import domain.Estudiante;
 import domain.Profesor;
 import domain.Usuario;
+import java.io.IOException;
 import java.sql.SQLException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
@@ -105,8 +110,20 @@ public class GUIRegistroDeUsuarioControlador {
     }
     
     @FXML
-    private void clicCancelar(ActionEvent event) {
-        UtilidadVentana.cerrarVentana(event);
+    private void clicRegresar(ActionEvent event) {
+        FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUILogin.fxml"));
+        try {
+            Scene escena = new Scene((Parent) cargadorFXML.load());
+            GUILoginControlador controladorGUI = cargadorFXML.getController();
+            controladorGUI.cargarCamposGUI();
+            Stage escenario = new Stage();
+            escenario.setTitle("Inicio de sesión");
+            escenario.setScene(escena);
+            escenario.show();
+            UtilidadVentana.cerrarVentana(event);
+        } catch(IOException excepcionIO) {
+            UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
+        }
     }
 
     private boolean hayCamposLlenos() {
@@ -127,16 +144,33 @@ public class GUIRegistroDeUsuarioControlador {
     
     private boolean correoInstitucionalValido() {
         boolean correoInstitucionalValido = false;
+        String tipoUsuario = this.cbTipoUsuario.getSelectionModel().getSelectedItem();
         String correoInstitucional = this.tfCorreoInstitucional.getText().replaceAll("\\s+", "").trim();
         
-        if(correoInstitucional.endsWith("@uv.mx") || correoInstitucional.endsWith("@estudiantes.uv.mx")) {
-            correoInstitucionalValido = true;
-        } else {
-            UtilidadVentana.mostrarAlerta(
-                "Correo institucional", 
-                "El correo ingresado no es un correo válido", 
-                Alert.AlertType.WARNING
-            );
+        switch(tipoUsuario) {
+            case ("Estudiante"):
+                if(correoInstitucional.endsWith("@estudiantes.uv.mx")) {
+                    correoInstitucionalValido = true;
+                } else {
+                    UtilidadVentana.mostrarAlerta(
+                        "Correo institucional inválido", 
+                        "El correo institucional ingresado es inválido", 
+                        Alert.AlertType.WARNING
+                    );
+                }
+                break;
+
+            case ("Profesor"):
+                if(correoInstitucional.endsWith("@uv.mx")) {
+                    correoInstitucionalValido = true;
+                } else {
+                    UtilidadVentana.mostrarAlerta(
+                        "Correo institucional inválido", 
+                        "El correo institucional ingresado es inválido", 
+                        Alert.AlertType.WARNING
+                    );
+                }
+                break;
         }
         
         return correoInstitucionalValido;
@@ -157,7 +191,8 @@ public class GUIRegistroDeUsuarioControlador {
                 UtilidadVentana.mostrarAlerta(
                     "Usuario no registrado", 
                     "El correo ingresado ya está en uso", 
-                    Alert.AlertType.ERROR);
+                    Alert.AlertType.WARNING
+                );
                 correoRegistradoAnteriormente = true;
             }
         } catch(SQLException excepcionSQL) {
@@ -186,6 +221,11 @@ public class GUIRegistroDeUsuarioControlador {
                         UtilidadVentana.mensajePerdidaDeConexion();
                     }
                     if(!estudianteObtenido.equals(new Estudiante())) {
+                        UtilidadVentana.mostrarAlerta(
+                            "Matricula inválida", 
+                            "La matricula ingresada ya está en uso", 
+                            Alert.AlertType.WARNING
+                        );
                         matriculaNumPersonalRegistrado = true;
                     }
                     break;
@@ -200,6 +240,11 @@ public class GUIRegistroDeUsuarioControlador {
                         UtilidadVentana.mensajePerdidaDeConexion();
                     }
                     if(!profesorObtenido.equals(new Profesor())) {
+                        UtilidadVentana.mostrarAlerta(
+                            "Número de personal inválido", 
+                            "El número de personal ingresado ya está en uso", 
+                            Alert.AlertType.WARNING
+                        );
                         matriculaNumPersonalRegistrado = true;
                     }
                     break;
@@ -221,12 +266,24 @@ public class GUIRegistroDeUsuarioControlador {
                     && matriculaNumPersonal.startsWith("S")
                     && numerosMatricula.chars().allMatch(Character::isDigit)) {
                     matriculaNumPersonalValido = true;
+                } else {
+                    UtilidadVentana.mostrarAlerta(
+                        "Matricula inválida", 
+                        "La matricula ingresada no es válida", 
+                        Alert.AlertType.WARNING
+                    );
                 }
                 break;
             case("Profesor"):
-                if(matriculaNumPersonal.length() == 5
+                if(matriculaNumPersonal.length() == 4
                     && matriculaNumPersonal.chars().allMatch(Character::isDigit)) {
                     matriculaNumPersonalValido = true;
+                } else {
+                    UtilidadVentana.mostrarAlerta(
+                        "Numero de personal inválido", 
+                        "El número de personal ingresado no es válido", 
+                        Alert.AlertType.WARNING
+                    );
                 }
                 break;
         }
@@ -234,9 +291,21 @@ public class GUIRegistroDeUsuarioControlador {
         return matriculaNumPersonalValido;
     }
     
+    private void limpiarCampos() {
+        this.tfNombre.clear();
+        this.tfApellidoPaterno.clear();
+        this.tfApellidoMaterno.clear();
+        this.tfCorreoInstitucional.clear();
+        this.tfMatriculaNumPersonal.clear();
+    }
+    
     @FXML
     private void clicRegistrar(ActionEvent event) {
-        if(hayCamposLlenos() && correoInstitucionalValido() && !correoEstaRegistrado() && matriculaNumPersonalValido() && !matriculaNumPersonalEstaRegistrado()) {
+        if(hayCamposLlenos()
+            && correoInstitucionalValido()
+            && !correoEstaRegistrado()
+            && matriculaNumPersonalValido()
+            && !matriculaNumPersonalEstaRegistrado()) {
             String nombre = this.tfNombre.getText().toUpperCase().replaceAll("\\s+", " ").trim();
             String apellidoPaterno = this.tfApellidoPaterno.getText().toUpperCase().replaceAll("\\s+", " ").trim();
             String apellidoMaterno = this.tfApellidoMaterno.getText().toUpperCase().replaceAll("\\s+", " ").trim();
@@ -267,7 +336,8 @@ public class GUIRegistroDeUsuarioControlador {
                             "Estudiante registrado", 
                             "La contraseña del estudiante es " + usuarioNuevo.getContrasenia() + ".\n" +
                                 "Solicite al usuario cambiarla cuando ingrese al sistema.", 
-                            Alert.AlertType.INFORMATION);
+                            Alert.AlertType.INFORMATION
+                        );
                     } catch(SQLException excepcionSQL) {
                         UtilidadVentana.mensajePerdidaDeConexion();
                     }
@@ -290,12 +360,15 @@ public class GUIRegistroDeUsuarioControlador {
                             "Profesor registrado", 
                             "La contraseña del profesor es " + usuarioNuevo.getContrasenia() + ".\n" +
                                 "Solicite al usuario cambiarla cuando ingrese al sistema.", 
-                            Alert.AlertType.INFORMATION);
+                            Alert.AlertType.INFORMATION
+                        );
                     } catch(SQLException excepcionSQL) {
                         UtilidadVentana.mensajePerdidaDeConexion();
                     }
                     break;
             }
+            
+            limpiarCampos();
         }
     }
     

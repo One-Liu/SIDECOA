@@ -161,7 +161,8 @@ public class GUILoginControlador {
             Stage escenario = new Stage();
             escenario.setTitle("Registro de usuario");
             escenario.setScene(escena);
-            escenario.showAndWait();
+            escenario.show();
+            UtilidadVentana.cerrarVentana(evento);
         } catch(IOException excepcionIO) {
             UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
         }

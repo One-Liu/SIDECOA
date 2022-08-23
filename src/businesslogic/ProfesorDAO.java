@@ -45,9 +45,9 @@ public class ProfesorDAO implements IProfesorDAO {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         
         Persona personaProfesor = new Persona();
-        personaProfesor.setNombre(personaProfesor.getNombre());
-        personaProfesor.setApellidoPaterno(personaProfesor.getApellidoPaterno());
-        personaProfesor.setApellidoMaterno(personaProfesor.getApellidoMaterno());
+        personaProfesor.setNombre(profesor.getNombre());
+        personaProfesor.setApellidoPaterno(profesor.getApellidoPaterno());
+        personaProfesor.setApellidoMaterno(profesor.getApellidoMaterno());
         
         String consulta = "INSERT INTO Profesor VALUES (?,?,?)";
         ConexionBD baseDeDatos = new ConexionBD();
