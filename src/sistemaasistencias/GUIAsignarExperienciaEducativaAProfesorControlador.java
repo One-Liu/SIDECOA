@@ -2,17 +2,18 @@ package sistemaasistencias;
 
 import businesslogic.EE_ProfesorDAO;
 import businesslogic.ExperienciaEducativaDAO;
-import businesslogic.ProfesorDAO;
+import domain.DatosGlobalesDeSesion;
 import domain.EE_Profesor;
 import domain.ExperienciaEducativa;
-import domain.Profesor;
 import java.sql.SQLException;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.util.StringConverter;
 
 /**
@@ -22,33 +23,17 @@ import javafx.util.StringConverter;
 public class GUIAsignarExperienciaEducativaAProfesorControlador {
 
     @FXML
-    private ComboBox<Profesor> cbProfesor;
+    private Label lblProfesor;
     @FXML
     private ComboBox<ExperienciaEducativa> cbEE;
 
-    private ObservableList<Profesor> profesores = FXCollections.observableArrayList();
     private ObservableList<ExperienciaEducativa> experienciasEducativas = FXCollections.observableArrayList();
 
+    public void setExperienciasEducativas(List<ExperienciaEducativa> experienciasEducativasSinProfesorAsignado) {
+        this.experienciasEducativas.addAll(experienciasEducativasSinProfesorAsignado);
+    }
+    
     public void cargarCamposGUI() throws SQLException {
-        ProfesorDAO profesorDAO = new ProfesorDAO();
-        ExperienciaEducativaDAO experienciaEducativaDAO = new ExperienciaEducativaDAO();
-        this.profesores.addAll(profesorDAO.obtenerProfesores());
-        this.experienciasEducativas.addAll(experienciaEducativaDAO.obtenerExperienciasEducativas());
-
-        this.cbProfesor.setItems(profesores);
-        this.cbProfesor.getSelectionModel().selectFirst();
-        this.cbProfesor.setConverter(new StringConverter<Profesor>() {
-            @Override
-            public String toString(Profesor profesor) {
-                return profesor == null ? null : "(" + profesor.getNumPersonal() + ") " + profesor.getNombreCompleto();
-            }
-
-            @Override
-            public Profesor fromString(String string) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
-
         this.cbEE.setItems(experienciasEducativas);
         this.cbEE.getSelectionModel().selectFirst();
         this.cbEE.setConverter(new StringConverter<ExperienciaEducativa>() {
@@ -62,11 +47,8 @@ public class GUIAsignarExperienciaEducativaAProfesorControlador {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
-    }
 
-    @FXML
-    private void clicCancelar(ActionEvent evento) {
-        UtilidadVentana.cerrarVentana(evento);
+        this.lblProfesor.setText(DatosGlobalesDeSesion.getDatosGlobalesDeSesion().getProfesor().getNombreCompleto());
     }
 
     private boolean eeDisponible() {
@@ -91,9 +73,8 @@ public class GUIAsignarExperienciaEducativaAProfesorControlador {
         if(eeDisponible()) {
             EE_Profesor ee_Profesor = new EE_Profesor();
             ExperienciaEducativa experienciaEducativa = this.cbEE.getSelectionModel().getSelectedItem();
-            Profesor profesor = this.cbProfesor.getSelectionModel().getSelectedItem();
             ee_Profesor.setExperienciaEducativa(experienciaEducativa);
-            ee_Profesor.setProfesor(profesor);
+            ee_Profesor.setProfesor(DatosGlobalesDeSesion.getDatosGlobalesDeSesion().getProfesor());
             EE_ProfesorDAO ee_ProfesorDAO = new EE_ProfesorDAO();
 
             try {
@@ -103,6 +84,7 @@ public class GUIAsignarExperienciaEducativaAProfesorControlador {
                     "El profesor se ha asignado exitosamente a la experiencia educativa",
                     Alert.AlertType.INFORMATION
                 );
+                UtilidadVentana.cerrarVentana(evento);
             } catch(SQLException excepcionSQL) {
                 UtilidadVentana.mensajePerdidaDeConexion();
             }

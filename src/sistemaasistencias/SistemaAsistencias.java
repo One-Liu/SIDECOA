@@ -1,7 +1,6 @@
 package sistemaasistencias;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -5,13 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="305.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaasistencias.GUIAsignarExperienciaEducativaAProfesorControlador">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaasistencias.GUIAsignarExperienciaEducativaAProfesorControlador">
    <children>
-      <ComboBox fx:id="cbProfesor" layoutX="28.0" layoutY="44.0" prefHeight="25.0" prefWidth="250.0" />
-      <ComboBox fx:id="cbEE" layoutX="28.0" layoutY="121.0" prefHeight="25.0" prefWidth="250.0" />
-      <Label layoutX="28.0" layoutY="27.0" text="Profesor" />
-      <Label layoutX="28.0" layoutY="104.0" text="Experiencia Educativa" />
-      <Button layoutX="142.0" layoutY="191.0" mnemonicParsing="false" onAction="#clicCancelar" text="Cancelar" />
-      <Button layoutX="222.0" layoutY="191.0" mnemonicParsing="false" onAction="#clicAsignar" text="Asignar" />
+      <ComboBox fx:id="cbEE" layoutX="28.0" layoutY="120.0" prefHeight="25.0" prefWidth="360.0" />
+      <Label layoutX="28.0" layoutY="30.0" text="Profesor" />
+      <Label layoutX="28.0" layoutY="103.0" text="Experiencia Educativa" />
+      <Button layoutX="332.0" layoutY="188.0" mnemonicParsing="false" onAction="#clicAsignar" text="Asignar" />
+      <Label fx:id="lblProfesor" layoutX="28.0" layoutY="47.0" text="NOMBRE_PROFESOR" />
    </children>
 </AnchorPane>

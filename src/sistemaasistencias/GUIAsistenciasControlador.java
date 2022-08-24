@@ -8,6 +8,8 @@ import domain.Estudiante;
 import domain.ExperienciaEducativa;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,8 +49,39 @@ public class GUIAsistenciasControlador {
 
     public void cargarCamposGUI() throws SQLException {
         ExperienciaEducativaDAO experienciaEducativaDAO = new ExperienciaEducativaDAO();
-        this.experienciasEducativas.addAll(experienciaEducativaDAO.obtenerExperienciasEducativas());
-
+        List<ExperienciaEducativa> experienciasEducativasDelProfesor = new ArrayList<>();
+        experienciasEducativasDelProfesor.addAll(experienciaEducativaDAO.obtenerExperienciasEducativasDeProfesor(DatosGlobalesDeSesion.getDatosGlobalesDeSesion().getProfesor()));
+        
+        List<ExperienciaEducativa> experienciasEducativasSinProfesor = new ArrayList<>();
+        experienciasEducativasSinProfesor.addAll(experienciaEducativaDAO.obtenerExperienciasEducativasSinProfesorAsignado());
+        
+        if(experienciasEducativasDelProfesor.isEmpty()) {
+            if(experienciasEducativasSinProfesor.isEmpty()) {
+                UtilidadVentana.mostrarAlerta(
+                    "No hay EEs disponibles",
+                    "Todas las EE se han asignado a un profesor",
+                    Alert.AlertType.ERROR
+                );
+                DatosGlobalesDeSesion.getDatosGlobalesDeSesion().setProfesor(null);
+                UtilidadVentana.cerrarVentana(new ActionEvent());
+            } else {
+                FXMLLoader cargadorFXML = new FXMLLoader(this.getClass().getResource("GUIAsignarExperienciaEducativaAProfesor.fxml"));
+                try {
+                    Scene escena = new Scene((Parent) cargadorFXML.load());
+                    GUIAsignarExperienciaEducativaAProfesorControlador controladorGUI = cargadorFXML.getController();
+                    controladorGUI.setExperienciasEducativas(experienciasEducativasSinProfesor);
+                    controladorGUI.cargarCamposGUI();
+                    Stage escenario = new Stage();
+                    escenario.setTitle("Asignar experiencia educativa");
+                    escenario.setScene(escena);
+                    escenario.showAndWait();
+                    experienciasEducativasDelProfesor.addAll(experienciaEducativaDAO.obtenerExperienciasEducativasDeProfesor(DatosGlobalesDeSesion.getDatosGlobalesDeSesion().getProfesor()));
+                } catch(IOException excepcionIO) {
+                    UtilidadVentana.mensajeErrorAlCargarLaInformacionDeLaVentana();
+                }
+            }
+        }
+        this.experienciasEducativas.addAll(experienciasEducativasDelProfesor);
         this.cbExperienciaEducativa.setItems(experienciasEducativas);
         this.cbExperienciaEducativa.getSelectionModel().selectFirst();
         this.cbExperienciaEducativa.setConverter(new StringConverter<ExperienciaEducativa>() {
